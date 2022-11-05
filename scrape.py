@@ -1,8 +1,9 @@
 from bs4 import BeautifulSoup
+import pandas as pd 
+
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
-
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 
@@ -19,17 +20,11 @@ driver.get("https://www.michiganlottery.com/resources/instant-games-prizes-remai
 elems = driver.find_elements(By.CLASS_NAME, "prizes-remaining-card")
 
 print(f'{len(elems)} cards found.')
+all_data = []
 for elem in elems:
-    inner = PrizeCard(elem.get_attribute('innerHTML'))
-    print(f"""
-        {inner.title=},
-        {inner.game_number=},
-        {inner.release_date=},
-        {inner.price=},
-        Data:
+    card = PrizeCard(elem.get_attribute('innerHTML'))
+    data = card.table_data.assign(game_title = card.title)
+    all_data.append(data)
 
-        {inner.table_data}
-    """)
-    print()
-
+print(pd.concat(all_data))
 driver.close()

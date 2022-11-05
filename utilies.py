@@ -11,7 +11,7 @@ class PrizeCard:
     @property
     def bs(self):
         """ Beautiful soup representation """
-        return BeautifulSoup(self._html)
+        return BeautifulSoup(self._html, features='html5lib')
     
     @property
     def title(self):
@@ -32,4 +32,6 @@ class PrizeCard:
     @property
     def table_data(self) -> pd.DataFrame:
         tab = self.bs.find('div', class_='prizes-remaining-card-table')
-        return pd.read_html(tab.encode_contents(), flavor='bs4')[0]
+        dat = pd.read_html(tab.encode_contents(), flavor='bs4')[0]
+        # TODO: clean up column types, remove "TOTAL:" rows
+        return dat
