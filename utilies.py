@@ -1,5 +1,7 @@
 from dataclasses import dataclass
 from bs4 import BeautifulSoup
+import pandas as pd
+import html5lib
 
 @dataclass
 class PrizeCard:
@@ -28,5 +30,6 @@ class PrizeCard:
         return self.bs.find('p', class_='game-title').text
 
     @property
-    def table_data(self):
-        pass
+    def table_data(self) -> pd.DataFrame:
+        tab = self.bs.find('div', class_='prizes-remaining-card-table')
+        return pd.read_html(tab.encode_contents(), flavor='bs4')[0]

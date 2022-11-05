@@ -26,6 +26,9 @@ for elem in elems:
         {inner.game_number=},
         {inner.release_date=},
         {inner.price=},
+        Data:
+
+        {inner.table_data}
     """)
     print()
 
