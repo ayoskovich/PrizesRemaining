@@ -23,6 +23,16 @@ Code that archives and analyes data on the Michigan Lottery.
 
 # Developer Notes
 
+## Online data sources
+
+1. [Prizes remaining](https://www.michiganlottery.com/resources/instant-games-prizes-remaining)
+2. [Search the map](https://www.michiganlottery.com/resources/find-a-retailer/453-instore-instant-tinsel-town)
+3. [Odds / price / game number](https://www.michiganlottery.com/games/453-instore-instant-tinsel-town)
+    - Click on image in #1
+4. External sites
+    - [Scratchoff-odds](https://scratchoff-odds.com/)
+    - [Scratchoffodds](https://www.scratchoffodds.com/)
+
 ## Docker
 
 TODO:
