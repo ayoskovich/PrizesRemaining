@@ -3,3 +3,4 @@ beautifulsoup4==4.11.1
 selenium==4.6.0
 pandas==1.5.0
 html5lib==1.1
+awswrangler==2.17.0
