@@ -1,10 +1,12 @@
-from bs4 import BeautifulSoup
+from datetime import datetime
+
 import pandas as pd
+
+import awswrangler as wr
 
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 
 from utilities import PrizeCard
@@ -26,5 +28,14 @@ for elem in elems:
     data = card.table_data.assign(game_title=card.title)
     all_data.append(data)
 
-print(pd.concat(all_data))
+df = pd.concat(all_data)
+
+now = str(datetime.now()).replace(":", "-").replace(".", "-")
+wr.s3.to_parquet(
+    # This will inherit the policy used in aws so there are no credentials
+    # here.
+    df=df,
+    path=f"s3://somethinsbucky/datums/output-{now}.parquet",
+)
+
 driver.close()

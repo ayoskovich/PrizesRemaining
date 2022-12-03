@@ -50,6 +50,11 @@ docker build -t scrape .
 docker run --rm scrape
 ```
 
+Use this to keep the container running and start a shell inside.
+```
+docker run -it --entrypoint=/bin/bash scrape
+```
+
 ## WSL 2 Environment
 
 To get started developing in WSL2, do the following
