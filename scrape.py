@@ -28,9 +28,8 @@ for elem in elems:
     data = card.table_data.assign(game_title=card.title)
     all_data.append(data)
 
-df = pd.concat(all_data)
-
 now = str(datetime.now()).replace(":", "-").replace(".", "-")
+df = pd.concat(all_data).assign(timestamp=datetime.now())
 wr.s3.to_parquet(
     # This will inherit the policy used in aws so there are no credentials
     # here.
