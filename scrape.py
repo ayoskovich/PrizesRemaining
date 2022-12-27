@@ -33,29 +33,29 @@ for elem in elems:
 now = str(datetime.now()).replace(":", "-").replace(".", "-")
 df = pd.concat(all_data).assign(timestamp=datetime.now())
 NAME = f"s3://somethinsbucky/datums/output-{now}.parquet"
-print('Shape before processing:', df.shape)
+print("Shape before processing:", df.shape)
 df = proc(df, NAME)
-print('Shape after processing:', df.shape)
+print("Shape after processing:", df.shape)
 
 # Write to s3
 wr.s3.to_parquet(df=df, path=NAME)
 
 # Write to db
-client = boto3.client('secretsmanager')
+client = boto3.client("secretsmanager")
 response = client.get_secret_value(
-    SecretId='rds!db-b98bc80d-69cd-4918-aa32-f0a33add0630'
-)['SecretString']
+    SecretId="rds!db-b98bc80d-69cd-4918-aa32-f0a33add0630"
+)["SecretString"]
 
 response = json.loads(response)
-user, password = response['username'], response['password']
-hostname = 'lotto.cvospk6lbhi0.us-east-1.rds.amazonaws.com'
+user, password = response["username"], response["password"]
+hostname = "lotto.cvospk6lbhi0.us-east-1.rds.amazonaws.com"
 port = 5432
-databasename = 'postgres'
+databasename = "postgres"
 
 cstring = f"postgresql://{user}:{password}@{hostname}:{port}/{databasename}"
 eng = sqlalchemy.create_engine(cstring)
 
 with eng.begin() as conn:
-    df.to_sql('soldtickets', con=conn, if_exists='append', index=False)
+    df.to_sql("soldtickets", con=conn, if_exists="append", index=False)
 
 driver.close()

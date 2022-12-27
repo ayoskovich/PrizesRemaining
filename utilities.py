@@ -40,34 +40,33 @@ class PrizeCard:
 
 
 def remove_totals(df: pd.DataFrame) -> pd.DataFrame:
-    return df.loc[lambda x: x['PRIZE'] != 'TOTAL:']
+    return df.loc[lambda x: x["PRIZE"] != "TOTAL:"]
+
 
 def convert_prize(prize: str) -> int:
-    """ Converts the prize column. 
-    
+    """Converts the prize column.
+
     $50 -> 50
     $3,000 -> 3000
     """
-    return pd.to_numeric(
-        prize.replace('$', '').replace(',', '')
-    )
+    return pd.to_numeric(prize.replace("$", "").replace(",", ""))
+
 
 def proc(df: pd.DataFrame, fname: str) -> pd.DataFrame:
-    """ Processing pipeline for an individual file"""
+    """Processing pipeline for an individual file"""
     rv = (
-        df
-        .pipe(remove_totals)
-        .assign(
-            PRIZE = lambda x: x['PRIZE'].apply(convert_prize),
-            src=fname
+        df.pipe(remove_totals)
+        .assign(PRIZE=lambda x: x["PRIZE"].apply(convert_prize), src=fname)
+        .rename(
+            columns={
+                "PRIZE": "prize_amount",
+                "REMAINING": "prizes_remaining",
+                "START": "prizes_start",
+                "game_title": "game_title",
+                "timestamp": "timestamp",
+                "src": "s3_source",
+            },
+            errors="raise",
         )
-        .rename(columns={
-            'PRIZE': 'prize_amount',
-            'REMAINING': 'prizes_remaining',
-            'START': 'prizes_start',
-            'game_title': 'game_title',
-            'timestamp': 'timestamp',
-            'src': 's3_source'
-        }, errors='raise')
     )
     return rv
