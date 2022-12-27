@@ -17,6 +17,6 @@ COPY requirements.txt requirements.txt
 RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
+COPY requirements.txt scrape.py utilities.py ./
 
 CMD [ "python", "scrape.py" ]

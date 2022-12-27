@@ -35,8 +35,6 @@ Code that archives and analyes data on the Michigan Lottery.
 
 ## Docker
 
-TODO:
-
 Remove all stopped containers
 
 ```
@@ -54,6 +52,8 @@ Use this to keep the container running and start a shell inside.
 ```
 docker run -it --entrypoint=/bin/bash scrape
 ```
+
+Note that after pushing a new image to the AWS ECR the task in AWS ECS will automatically use the latest image.
 
 ## WSL 2 Environment
 
