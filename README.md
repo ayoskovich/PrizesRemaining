@@ -72,3 +72,9 @@ TODO: X server, Windows X server setup in Windows Defender, etc.
 https://www.gregbrisebois.com/posts/chromedriver-in-wsl2/
 https://stackoverflow.com/questions/61110603/how-to-set-up-working-x11-forwarding-on-wsl2
 https://github.com/cascadium/wsl-windows-toolbar-launcher#firewall-rules
+
+
+## AWS ECS
+
+- https://stackoverflow.com/questions/35924158/docker-run-program-arguments-in-aws-ecs
+    - The scraping script gets this weird error, which I think is due to an inadequate amount of disk space or something.
